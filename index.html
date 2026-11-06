@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>사진 배경 제거</title>
+  <meta name="description" content="사진을 올리면 브라우저에서 바로 배경을 지워 주는 무료 도구. 사진은 서버로 전송되지 않습니다.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <h1>사진 배경 제거</h1>
+      <p>사진은 서버로 전송되지 않고, 이 브라우저 안에서만 처리됩니다.</p>
+    </header>
+
+    <label id="drop" class="drop">
+      <input id="file" type="file" accept="image/png,image/jpeg,image/webp" multiple>
+      <strong>사진을 끌어다 놓거나 클릭해서 선택</strong>
+      <span>JPG, PNG, WebP · 여러 장 가능 · 붙여넣기(Ctrl/⌘+V) 지원</span>
+    </label>
+
+    <div class="options">
+      <label>품질
+        <select id="model">
+          <option value="isnet_fp16">고품질 (첫 실행 시 약 100MB 다운로드)</option>
+          <option value="isnet_quint8">빠름 (첫 실행 시 약 55MB 다운로드)</option>
+        </select>
+      </label>
+      <div class="swatches" role="radiogroup" aria-label="배경색">
+        <span>배경</span>
+        <button type="button" class="swatch transparent" data-color="" role="radio" aria-checked="true" aria-label="투명"></button>
+        <button type="button" class="swatch" data-color="#ffffff" role="radio" aria-checked="false" aria-label="흰색" style="background:#ffffff"></button>
+        <button type="button" class="swatch" data-color="#000000" role="radio" aria-checked="false" aria-label="검정" style="background:#000000"></button>
+        <button type="button" class="swatch" data-color="#3b82f6" role="radio" aria-checked="false" aria-label="파랑" style="background:#3b82f6"></button>
+        <label class="swatch custom" aria-label="직접 선택"><input id="custom-color" type="color" value="#22c55e"></label>
+      </div>
+    </div>
+
+    <section id="results" class="results" aria-live="polite"></section>
+  </main>
+
+  <footer>
+    <span>Powered by <a href="https://github.com/imgly/background-removal-js">@imgly/background-removal</a> (AGPL-3.0)</span>
+    <a id="source" hidden>소스 코드</a>
+  </footer>
+
+  <template id="card">
+    <article class="card">
+      <div class="stage">
+        <img class="preview" alt="">
+        <div class="status" role="status"></div>
+      </div>
+      <div class="meta">
+        <span class="name"></span>
+        <div class="actions">
+          <button type="button" class="compare" hidden>원본 보기</button>
+          <button type="button" class="download primary" hidden>PNG 저장</button>
+          <button type="button" class="remove" aria-label="삭제">✕</button>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
